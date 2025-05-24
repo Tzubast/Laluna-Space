@@ -53,7 +53,139 @@
         </div>
       </div>
     </section>
+```html
+<!-- Section 1: Hero -->
+<section class="hero">
+  <div class="overlay">
+    <div class="header">LA LUNA SPACE</div>
+    <div class="content">
+      <p class="hero-text">
+        we’re <strong>welcoming</strong> you <em>always</em>
+      </p>
+      <button class="explore-btn" @click="$router.push('/menu')">Explore Menu</button>
+    </div>
+  </div>
+</section>
 
+<!-- Section 2: About Us -->
+<section id="about" class="about" v-scroll-reveal>
+  <h2><strong>About</strong> <em>Us</em></h2>
+  <div class="about-content">
+    <img src="@/assets/about-img.png" alt="About Us" class="about-img" />
+    <div class="about-text">
+      <h3><strong>Hello,</strong><br />Welcome to <em>La Luna Space</em>.</h3>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+      <div class="stats">
+        <div>
+          <span id="foodCount">{{ foodCount }}</span>
+          <p>Food</p>
+        </div>
+        <div>
+          <span id="beverageCount">{{ beverageCount }}</span>
+          <p>Beverage</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Between Section 2-3: Customer Says -->
+<section class="testimonials" v-scroll-reveal>
+  <h2>Customer Says</h2>
+  <div class="testimonial-wrapper">
+    <div class="testimonial-card" v-for="(testimonial, index) in testimonials" :key="index">
+      <img src="https://www.w3schools.com/howto/img_avatar.png" class="avatar" />
+      <div>
+        <h4>Customer {{ index + 1 }}</h4>
+        <p>{{ testimonial }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3: Gallery -->
+<section class="gallery" v-scroll-reveal>
+  <h2><strong>OUR</strong> <em>FACILITY</em></h2>
+  <div class="gallery-grid">
+    <div class="gallery-item" v-for="(image, index) in images" :key="index">
+      <img :src="image" alt="Gallery Image" />
+      <div class="caption">Dump {{ index + 1 }}</div>
+    </div>
+  </div>
+  <button class="view-all" @click="$router.push('/gallery')">View All Gallery</button>
+</section>
+```
+
+```javascript
+export default {
+  name: 'LandingPage',
+  data() {
+    return {
+      foodCount: 0,
+      beverageCount: 0,
+      testimonials: [
+        'Lorem ipsum dolor sit amet.',
+        'Lorem ipsum dolor sit amet.',
+        'Lorem ipsum dolor sit amet.',
+        'Lorem ipsum dolor sit amet.',
+        'Lorem ipsum dolor sit amet.',
+        'Lorem ipsum dolor sit amet.',
+        'Lorem ipsum dolor sit amet.',
+        'Lorem ipsum dolor sit amet.',
+        'Lorem ipsum dolor sit amet.',
+        'Lorem ipsum dolor sit amet.',
+      ],
+      images: [
+        'https://www.w3schools.com/w3images/lights.jpg',
+        'https://www.w3schools.com/w3images/lights.jpg',
+        'https://www.w3schools.com/w3images/lights.jpg',
+        'https://www.w3schools.com/w3images/lights.jpg',
+        'https://www.w3schools.com/w3images/lights.jpg',
+        'https://www.w3schools.com/w3images/lights.jpg',
+        'https://www.w3schools.com/w3images/lights.jpg',
+        'https://www.w3schools.com/w3images/lights.jpg',
+        'https://www.w3schools.com/w3images/lights.jpg',
+      ],
+    };
+  },
+  mounted() {
+    const counters = document.querySelectorAll('.count');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = +el.getAttribute('data-target');
+          let count = 0;
+          const increment = target / 100;
+          const updateCount = () => {
+            count += increment;
+            if (count < target) {
+              el.innerText = Math.ceil(count);
+              requestAnimationFrame(updateCount);
+            } else {
+              el.innerText = target;
+            }
+          };
+          updateCount();
+          observer.unobserve(el);
+        }
+      });
+    }, {
+      threshold: 1.0
+    });
+
+    counters.forEach(counter => {
+      observer.observe(counter);
+    });
+
+    this.foodCount = 100;
+    this.beverageCount = 50;
+  }
+};
+```
     <!-- Section 3: Gallery -->
     <section class="gallery" v-scroll-reveal>
       <h2><strong>OUR</strong> <em>FACILITY</em></h2>
