@@ -1,4 +1,6 @@
-# laluna-space
+# Laluna-Space
+Profile Company of Laluna Space
+
 
 ## Project setup
 ```

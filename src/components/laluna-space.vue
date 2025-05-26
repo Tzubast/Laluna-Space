@@ -1,46 +1,39 @@
 <template>
   <div class="landing-page">
-    <!-- Section 1: Hero -->
-    <section class="hero">
-    <div class="overlay">
+    <!-- Hero Section -->
+    <section class="hero" v-scroll-reveal>
+      <div class="overlay">
       <div class="header">LA LUNA SPACE</div>
-      <div class="content">
-        <p class="hero-text">
-          we’re <strong>welcoming</strong> you <em>always</em>
-        </p>
+      <div class="hero-content">
+        <h1 class="h1-text"><strong>we're welcoming</strong> <em>you always</em></h1>
         <button class="explore-btn">Explore Menu</button>
       </div>
-    </div>
-  </section>
+      </div>
+    </section>
 
-    <!-- Section 2: About Us -->
-<section id="about" class="about" v-scroll-reveal>
-  <h2><strong>About</strong> <em>Us</em></h2>
-  <div class="about-content">
-    <img src="@/assets/about-img.png" alt="About Us" class="about-img" />
-    <div class="about-text">
-      <h3><strong>Hello,</strong><br />Welcome to <em>La Luna Space</em>.</h3>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-      <div class="stats">
-        <div>
-          <span id="foodCount">0</span>
-          <p>Food</p>
-        </div>
-        <div>
-          <span id="beverageCount">0</span>
-          <p>Beverage</p>
+    <!-- About Us -->
+    <section class="about" v-scroll-reveal>
+      <h2><strong>About</strong> <em>Us</em></h2>
+      <div class="about-content">
+        <img :src="require('@/assets/about-img.png')" alt="cashier" class="about-img" />
+        <div class="about-text">
+          <h3>Hello,<br />Welcome to La Luna Space.</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+          <div class="stats">
+            <div>
+              <span class="count" data-target="50">0</span>
+              <p>Food</p>
+            </div>
+            <div>
+              <span class="count" data-target="50">0</span>
+              <p>Beverage</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-
-
-    <!-- Between Section 2-3: Customer Says -->
+    <!-- Testimonials -->
     <section class="testimonials" v-scroll-reveal>
       <h2>Customer Says</h2>
       <div class="testimonial-wrapper">
@@ -53,140 +46,8 @@
         </div>
       </div>
     </section>
-```html
-<!-- Section 1: Hero -->
-<section class="hero">
-  <div class="overlay">
-    <div class="header">LA LUNA SPACE</div>
-    <div class="content">
-      <p class="hero-text">
-        we’re <strong>welcoming</strong> you <em>always</em>
-      </p>
-      <button class="explore-btn" @click="$router.push('/menu')">Explore Menu</button>
-    </div>
-  </div>
-</section>
 
-<!-- Section 2: About Us -->
-<section id="about" class="about" v-scroll-reveal>
-  <h2><strong>About</strong> <em>Us</em></h2>
-  <div class="about-content">
-    <img src="@/assets/about-img.png" alt="About Us" class="about-img" />
-    <div class="about-text">
-      <h3><strong>Hello,</strong><br />Welcome to <em>La Luna Space</em>.</h3>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-      <div class="stats">
-        <div>
-          <span id="foodCount">{{ foodCount }}</span>
-          <p>Food</p>
-        </div>
-        <div>
-          <span id="beverageCount">{{ beverageCount }}</span>
-          <p>Beverage</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Between Section 2-3: Customer Says -->
-<section class="testimonials" v-scroll-reveal>
-  <h2>Customer Says</h2>
-  <div class="testimonial-wrapper">
-    <div class="testimonial-card" v-for="(testimonial, index) in testimonials" :key="index">
-      <img src="https://www.w3schools.com/howto/img_avatar.png" class="avatar" />
-      <div>
-        <h4>Customer {{ index + 1 }}</h4>
-        <p>{{ testimonial }}</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Section 3: Gallery -->
-<section class="gallery" v-scroll-reveal>
-  <h2><strong>OUR</strong> <em>FACILITY</em></h2>
-  <div class="gallery-grid">
-    <div class="gallery-item" v-for="(image, index) in images" :key="index">
-      <img :src="image" alt="Gallery Image" />
-      <div class="caption">Dump {{ index + 1 }}</div>
-    </div>
-  </div>
-  <button class="view-all" @click="$router.push('/gallery')">View All Gallery</button>
-</section>
-```
-
-```javascript
-export default {
-  name: 'LandingPage',
-  data() {
-    return {
-      foodCount: 0,
-      beverageCount: 0,
-      testimonials: [
-        'Lorem ipsum dolor sit amet.',
-        'Lorem ipsum dolor sit amet.',
-        'Lorem ipsum dolor sit amet.',
-        'Lorem ipsum dolor sit amet.',
-        'Lorem ipsum dolor sit amet.',
-        'Lorem ipsum dolor sit amet.',
-        'Lorem ipsum dolor sit amet.',
-        'Lorem ipsum dolor sit amet.',
-        'Lorem ipsum dolor sit amet.',
-        'Lorem ipsum dolor sit amet.',
-      ],
-      images: [
-        'https://www.w3schools.com/w3images/lights.jpg',
-        'https://www.w3schools.com/w3images/lights.jpg',
-        'https://www.w3schools.com/w3images/lights.jpg',
-        'https://www.w3schools.com/w3images/lights.jpg',
-        'https://www.w3schools.com/w3images/lights.jpg',
-        'https://www.w3schools.com/w3images/lights.jpg',
-        'https://www.w3schools.com/w3images/lights.jpg',
-        'https://www.w3schools.com/w3images/lights.jpg',
-        'https://www.w3schools.com/w3images/lights.jpg',
-      ],
-    };
-  },
-  mounted() {
-    const counters = document.querySelectorAll('.count');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const target = +el.getAttribute('data-target');
-          let count = 0;
-          const increment = target / 100;
-          const updateCount = () => {
-            count += increment;
-            if (count < target) {
-              el.innerText = Math.ceil(count);
-              requestAnimationFrame(updateCount);
-            } else {
-              el.innerText = target;
-            }
-          };
-          updateCount();
-          observer.unobserve(el);
-        }
-      });
-    }, {
-      threshold: 1.0
-    });
-
-    counters.forEach(counter => {
-      observer.observe(counter);
-    });
-
-    this.foodCount = 100;
-    this.beverageCount = 50;
-  }
-};
-```
-    <!-- Section 3: Gallery -->
+    <!-- Gallery -->
     <section class="gallery" v-scroll-reveal>
       <h2><strong>OUR</strong> <em>FACILITY</em></h2>
       <div class="gallery-grid">
@@ -203,6 +64,25 @@ export default {
 <script>
 export default {
   name: 'LandingPage',
+  directives: {
+    scrollReveal: {
+      mounted(el) {
+        el.style.opacity = 0;
+        el.style.transform = 'translateY(40px)';
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              el.style.opacity = 1;
+              el.style.transform = 'translateY(0)';
+              observer.unobserve(el);
+            }
+          },
+          { threshold: 0.1 }
+        );
+        observer.observe(el);
+      },
+    },
+  },
   mounted() {
     const counters = document.querySelectorAll('.count');
     const observer = new IntersectionObserver(entries => {
@@ -211,7 +91,7 @@ export default {
           const el = entry.target;
           const target = +el.getAttribute('data-target');
           let count = 0;
-          const increment = target / 100;
+          const increment = target / 300;
           const updateCount = () => {
             count += increment;
             if (count < target) {
@@ -225,13 +105,9 @@ export default {
           observer.unobserve(el);
         }
       });
-    }, {
-      threshold: 1.0
-    });
+    }, { threshold: 1.0 });
 
-    counters.forEach(counter => {
-      observer.observe(counter);
-    });
+    counters.forEach(counter => observer.observe(counter));
   }
 };
 </script>
@@ -243,7 +119,6 @@ body {
   background-color: black;
   color: white;
 }
-
 section {
   min-height: 100vh;
   display: flex;
@@ -254,7 +129,7 @@ section {
   text-align: center;
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition: opacity 0.9s ease-out, transform 1s ease-out;
 }
 
 section[v-scroll-reveal].v-enter-active,
@@ -263,17 +138,18 @@ section[v-scroll-reveal].v-enter-to {
   transform: translateY(0);
 }
 
+.h1-text {
+color: #ffffff;
+}
+
 .hero {
-  background-image: url('@/assets/hero-bg.png'); /* ganti dengan file gambar hero baru */
+   background-image: url('@/assets/hero-bg.png');
   background-size: cover;
   background-position: center;
   width: 100vw;
   height: 100vh;
   position: relative;
   font-family: 'Inter', sans-serif;
-  font-size: 32px;
-  line-height: 1;
-  letter-spacing: 0;
 }
 
 .overlay {
@@ -341,40 +217,14 @@ section[v-scroll-reveal].v-enter-to {
 }
 
 .about-img {
-  width: 596px;
-  height: 342px;
-  object-fit: cover;
-}
-
-.about h2 {
-  align-self: flex-start;
-  font-size: 20px;
-  font-style: italic;
-  margin-bottom: 20px;
-}
-
-.about h2 strong {
-  font-style: normal;
+   width: 50%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
 }
 
 .about-text {
   max-width: 639px;
-  text-align: right;
-}
-
-.about-text h3 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.about-text h3 em {
-  font-style: italic;
-}
-
-.about-text p {
-  font-size: 14px;
-  line-height: 1.6;
+  text-align: left;
 }
 
 .stats {
@@ -390,6 +240,7 @@ section[v-scroll-reveal].v-enter-to {
 .stats span {
   font-size: 48px;
   display: block;
+  color: #ffffff;
 }
 
 .testimonials {
@@ -461,4 +312,6 @@ section[v-scroll-reveal].v-enter-to {
   font-size: 16px;
   border-radius: 4px;
 }
+
+
 </style>
