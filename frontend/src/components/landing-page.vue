@@ -40,39 +40,76 @@
       </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="testimonials" v-scroll-reveal>
-      <div class="testimonials-container">
-        <h2>customer says</h2>
-        <div class="testimonial-wrapper">
-          <div class="testimonial-card" v-for="i in 5" :key="i">
-            <div class="testimonial-header">
-              <img src="https://www.w3schools.com/howto/img_avatar.png" class="avatar" />
-              <span class="customer-name">sabrina</span>
+  <!-- Testimonials -->
+<section class="testimonials" v-scroll-reveal>
+  <div class="testimonials-container">
+    <h2>customer says</h2>
+    <div class="testimonial-wrapper">
+      <!-- Original 5 cards -->
+      <div class="testimonial-card" v-for="i in 5" :key="i">
+        <div class="testimonial-header">
+          <img src="https://www.w3schools.com/howto/img_avatar.png" class="avatar" />
+          <span class="customer-name">sabrina</span>
+        </div>
+        <p class="testimonial-text">"kalau ditanya sesuai dari ekspetasi, malah melebihi ekspetasi awal stur"</p>
+      </div>
+      <!-- Duplicate 5 cards untuk seamless loop -->
+      <div class="testimonial-card" v-for="i in 5" :key="i + 5">
+        <div class="testimonial-header">
+          <img src="https://www.w3schools.com/howto/img_avatar.png" class="avatar" />
+          <span class="customer-name">sabrina</span>
+        </div>
+        <p class="testimonial-text">"kalau ditanya sesuai dari ekspetasi, malah melebihi ekspetasi awal stur"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Gallery -->
+   <section class="gallery" v-scroll-reveal>
+    <div class="gallery-container">
+      <h2><strong>OUR</strong> <em>FACILITY</em></h2>
+      
+      <div class="gallery-grid" :class="{ 'expanded': showAllPhotos }">
+        <div 
+          class="gallery-card" 
+          v-for="(item, index) in displayedItems" 
+          :key="index"
+          :class="{ 'hidden-item': index >= 5 && !showAllPhotos }"
+        >
+          <div class="image-container">
+            <img :src="item.image" :alt="item.title" />
+            <div class="overlay">
+              <div class="card-content">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.description }}</p>
+              </div>
             </div>
-            <p class="testimonial-text">"kalau ditanya sesuai dari ekspetasi, malah melebihi ekspetasi awal stur"</p>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- Gallery -->
-    <section class="gallery" v-scroll-reveal>
-      <h2><strong>OUR</strong> <em>FACILITY</em></h2>
-      <div class="gallery-grid">
-        <div class="gallery-item" v-for="i in 9" :key="i">
-          <img src="https://www.w3schools.com/w3images/lights.jpg" alt="Gallery Image" />
-          <div class="caption">Dump {{ i }}</div>
-        </div>
-      </div>
-      <button class="view-all">View All Gallery</button>
-    </section>
+      
+      <button 
+        class="view-all-btn" 
+        @click="toggleGallery"
+        :class="{ 'expanded': showAllPhotos }"
+      >
+        {{ showAllPhotos ? 'Show Less' : 'View All Gallery' }}
+      </button>
+    </div>
+  </section>
   </div>
+      <AppFooter />
 </template>
 
 <script>
+import AppFooter from '@/components/AppFooter.vue'
+
 export default {
   name: 'LandingPage',
+   components: {
+    AppFooter
+  },
   directives: {
     scrollReveal: {
       mounted(el) {
@@ -119,6 +156,7 @@ export default {
     counters.forEach(counter => observer.observe(counter));
   }
 };
+
 </script>
 
 <style>
@@ -354,7 +392,7 @@ section[v-scroll-reveal].v-enter-to {
 }
 
 .testimonials-container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 40px;
   text-align: center;
@@ -370,19 +408,30 @@ section[v-scroll-reveal].v-enter-to {
 
 .testimonial-wrapper {
   display: flex;
+  animation: slide 20s linear infinite;
   gap: 30px;
-  justify-content: center;
-  flex-wrap: wrap;
+  width: calc(300px * 10 + 30px * 9); /* Width untuk 10 cards + gaps */
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-300px * 5 - 30px * 4)); /* Geser sebesar 5 cards + gaps */
+  }
 }
 
 .testimonial-card {
   width: 300px;
+  min-width: 300px; /* Prevent shrinking */
   background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 25px;
   text-align: left;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0; /* Prevent cards from shrinking */
 }
 
 .testimonial-card:hover {
@@ -419,15 +468,32 @@ section[v-scroll-reveal].v-enter-to {
   font-style: italic;
 }
 
+/* Pause animation on hover */
+.testimonial-wrapper:hover {
+  animation-play-state: paused;
+}
+
 @media (max-width: 768px) {
-  .testimonial-wrapper {
-    flex-direction: column;
-    align-items: center;
+  .testimonials-container {
+    padding: 0 20px;
   }
   
   .testimonial-card {
-    width: 100%;
-    max-width: 350px;
+    width: 280px;
+    min-width: 280px;
+  }
+  
+  .testimonial-wrapper {
+    width: calc(280px * 10 + 30px * 9);
+  }
+  
+  @keyframes slide {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-280px * 5 - 30px * 4));
+    }
   }
   
   .testimonials h2 {
