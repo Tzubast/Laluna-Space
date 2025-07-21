@@ -317,7 +317,7 @@ section[v-scroll-reveal].v-enter-to {
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  background-image: url('@/assets/hero-bg.png');
   height: 100vh;
   display: flex;
   align-items: center;
@@ -331,10 +331,12 @@ section[v-scroll-reveal].v-enter-to {
 .overlay {
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+  background-color: rgba(0, 0, 0, 0.3);
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  padding: 2rem;
 }
 
 .hero-content {
@@ -354,7 +356,7 @@ section[v-scroll-reveal].v-enter-to {
 
 .hero-content h1 em {
   font-style: italic;
-  color: #ffffff;
+  color: #d4af37;
 }
 
 .hero-subtitle {
@@ -380,46 +382,419 @@ section[v-scroll-reveal].v-enter-to {
   padding: 0 20px;
 }
 
-/* Service Toggle */
+/* Service Toggle - Sesuai referensi */
 .service-toggle {
   display: flex;
   justify-content: center;
   gap: 0;
   margin-bottom: 60px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
   overflow: hidden;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: transparent;
 }
 
 .toggle-btn {
   background-color: transparent;
   border: none;
   color: #cccccc;
-  padding: 15px 30px;
+  padding: 12px 24px;
   font-size: 0.9rem;
-  font-weight: 400;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   white-space: nowrap;
   min-width: 120px;
+  text-transform: uppercase;
 }
 
 .toggle-btn.active {
-  background-color: rgba(255, 255, 255, 0.08);
-  color: white;
+  background-color: #d4af37;
+  color: #000;
 }
 
 .toggle-btn:hover:not(.active) {
   color: white;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(212, 175, 55, 0.1);
 }
 
-/* 3D Flip Container */
+/* Content Layout */
+.content-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+  min-height: 500px;
+}
+
+/* Signature Menu - Sesuai referensi */
+.signature-menu {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 25px;
+  height: fit-content;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.menu-header h2 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: white;
+  margin: 0;
+}
+
+.menu-badge {
+  background-color: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  color: #d4af37;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Menu Images Layout - Diperbaiki sesuai referensi */
+.menu-images {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  height: 300px;
+}
+
+.main-image {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.secondary-images {
+  grid-column: 2;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+}
+
+.secondary-image {
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.main-image img, 
+.secondary-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.main-image:hover img, 
+.secondary-image:hover img {
+  transform: scale(1.05);
+}
+
+.reality-badge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 400;
+}
+
+/* Project Overview - Diperbaiki */
+.project-overview {
+  padding: 0;
+  height: fit-content;
+}
+
+.project-overview h3 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 25px;
+  letter-spacing: -0.5px;
+}
+
+.overview-description {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #cccccc;
+  margin-bottom: 25px;
+  text-align: justify;
+}
+
+.overview-details {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #cccccc;
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+/* Project Info Box - Diperbaiki */
+.project-info {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 25px;
+}
+
+.project-info h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.info-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  color: #999;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.info-value {
+  color: white;
+  font-weight: 400;
+  font-size: 0.85rem;
+  text-align: right;
+}
+
+/* Gallery Section - Diperbaiki */
+.gallery-section {
+  margin-top: 50px;
+  clear: both;
+}
+
+.gallery-section h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.gallery-item {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Other Menu Section */
+.other-menu-section h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.other-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.menu-card {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.menu-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.menu-card-image {
+  height: 180px;
+  overflow: hidden;
+  background-color: #1a1a1a;
+}
+
+.menu-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.menu-card:hover .menu-card-image img {
+  transform: scale(1.08);
+}
+
+.menu-card-content {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-card-content h4 {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.menu-price {
+  color: #d4af37;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .content-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .gallery-grid,
+  .other-menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 60px 0;
+  }
+  
+  .service-toggle {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .toggle-btn {
+    flex: 1;
+    padding: 10px 16px;
+    font-size: 0.8rem;
+  }
+  
+  .signature-menu,
+  .project-info {
+    padding: 20px;
+  }
+  
+  .menu-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .menu-images {
+    grid-template-columns: 1fr;
+    grid-template-rows: 200px 100px 100px;
+    height: auto;
+  }
+  
+  .main-image {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  
+  .secondary-images {
+    grid-column: 1;
+    grid-row: 2 / 4;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+  
+  .gallery-grid,
+  .other-menu-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding-top: 60px;
+  }
+  
+  .content-container {
+    padding: 0 15px;
+  }
+  
+  .service-toggle {
+    margin-bottom: 40px;
+  }
+  
+  .signature-menu,
+  .project-info {
+    padding: 15px;
+  }
+  
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .info-value {
+    text-align: left;
+  }
+}
+
+/* 3D Flip Container - Jika masih digunakan */
 .flip-container {
   perspective: 1200px;
   width: 100%;
@@ -457,379 +832,12 @@ section[v-scroll-reveal].v-enter-to {
   transform: rotateY(180deg);
 }
 
-/* Content Layout */
-.content-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: start;
-  min-height: 500px;
-}
-
-/* Signature Menu */
-.signature-menu {
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 30px;
-  height: fit-content;
-}
-
-.menu-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.menu-header h2 {
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: white;
-  margin: 0;
-}
-
-.menu-badge {
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  padding: 6px 16px;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  font-weight: 400;
-  letter-spacing: 1px;
-  white-space: nowrap;
-}
-
-.menu-images {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 15px;
-  height: 280px;
-}
-
-.main-image, 
-.secondary-image {
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-}
-
-.main-image img, 
-.secondary-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.main-image:hover img, 
-.secondary-image:hover img {
-  transform: scale(1.05);
-}
-
-.reality-badge {
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 400;
-}
-
-/* Project Overview */
-.project-overview {
-  padding: 0;
-  height: fit-content;
-}
-
-.project-overview h3 {
-  font-size: 2rem;
-  font-weight: 400;
-  color: white;
-  margin-bottom: 25px;
-  letter-spacing: -1px;
-}
-
-.overview-description, 
-.overview-details {
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: #cccccc;
-  margin-bottom: 20px;
-  text-align: justify;
-}
-
-.project-info {
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 25px;
-  margin-top: 30px;
-}
-
-.project-info h4 {
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: white;
-  margin-bottom: 20px;
-}
-
-.info-grid {
-  display: grid;
-  gap: 12px;
-}
-
-.info-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.info-item:last-child {
-  border-bottom: none;
-}
-
-.info-label {
-  color: #cccccc;
-  font-size: 0.9rem;
-  flex-shrink: 0;
-}
-
-.info-value {
-  color: white;
-  font-weight: 400;
-  font-size: 0.9rem;
-  text-align: right;
-}
-
-/* Gallery Section */
-.gallery-section {
-  margin-top: 60px;
-  clear: both;
-}
-
-.gallery-section h3 {
-  font-size: 2rem;
-  font-weight: 400;
-  color: white;
-  margin-bottom: 40px;
-  text-align: center;
-}
-
-.other-menu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
-}
-
-.menu-card {
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.menu-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(255, 255, 255, 0.08);
-}
-
-.menu-card-image {
-  height: 200px;
-  overflow: hidden;
-}
-
-.menu-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.menu-card:hover .menu-card-image img {
-  transform: scale(1.08);
-}
-
-.menu-card-content {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.menu-card-content h4 {
-  color: white;
-  font-size: 1rem;
-  font-weight: 400;
-  margin: 0;
-}
-
-.menu-price {
-  color: #cccccc;
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .content-container {
-    padding: 0 30px;
-  }
-  
-  .content-layout {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  
-  .flip-container {
-    min-height: auto;
-  }
-  
-  .other-menu-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .content-container {
-    padding: 0 20px;
-  }
-  
-  .main-content {
-    padding: 60px 0;
-  }
-  
-  .service-toggle {
-    width: 100%;
-    max-width: 400px;
-  }
-  
-  .toggle-btn {
-    flex: 1;
-    padding: 12px 20px;
-    font-size: 0.85rem;
-    min-width: auto;
-  }
-  
-  .signature-menu,
-  .project-info {
-    padding: 20px;
-  }
-  
-  .menu-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  
-  .menu-images {
-    grid-template-columns: 1fr;
-    height: auto;
-    gap: 15px;
-  }
-  
-  .main-image,
-  .secondary-image {
-    height: 180px;
-  }
-  
-  .project-overview h3 {
-    font-size: 1.6rem;
-  }
-  
-  .other-menu-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  
-  .gallery-section h3 {
-    font-size: 1.6rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero {
-    padding-top: 60px;
-  }
-  
-  .hero-content {
-    padding: 0 15px;
-  }
-  
-  .main-content {
-    padding: 40px 0;
-  }
-  
-  .content-container {
-    padding: 0 15px;
-  }
-  
-  .service-toggle {
-    margin-bottom: 40px;
-  }
-  
-  .toggle-btn {
-    padding: 10px 15px;
-    font-size: 0.8rem;
-  }
-  
-  .signature-menu,
-  .project-info {
-    padding: 15px;
-  }
-  
-  .menu-header h2 {
-    font-size: 1.3rem;
-  }
-  
-  .project-overview h3 {
-    font-size: 1.4rem;
-  }
-  
-  .gallery-section {
-    margin-top: 40px;
-  }
-  
-  .gallery-section h3 {
-    font-size: 1.4rem;
-  }
-  
-  .info-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-  
-  .info-value {
-    text-align: left;
-  }
-}
-
-/* Perbaikan untuk overflow dan z-index */
-.flip-container {
-  overflow: hidden;
-}
-
-.content-layout {
-  position: relative;
-  z-index: 1;
-}
-
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Preload images untuk menghindari flash */
+/* Image optimization */
 img {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
