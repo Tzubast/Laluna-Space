@@ -6,7 +6,7 @@
       <div class="overlay">
         <div class="hero-content">
           <h1 class="h1-text"><strong>we're welcoming</strong> <em>you always</em></h1>
-          <button class="explore-btn">Explore Menu</button>
+          <button class="explore-btn" @click="goToMenu">Explore Menu</button>
         </div>
       </div>
     </section>
@@ -40,66 +40,66 @@
       </div>
     </section>
 
-  <!-- Testimonials -->
-<section class="testimonials" v-scroll-reveal>
-  <div class="testimonials-container">
-    <h2>customer says</h2>
-    <div class="testimonial-wrapper">
-      <!-- Original 5 cards -->
-      <div class="testimonial-card" v-for="i in 5" :key="i">
-        <div class="testimonial-header">
-          <img src="https://www.w3schools.com/howto/img_avatar.png" class="avatar" />
-          <span class="customer-name">sabrina</span>
+    <!-- Testimonials -->
+    <section class="testimonials" v-scroll-reveal>
+      <div class="testimonials-container">
+        <h2>customer says</h2>
+        <div class="testimonial-wrapper">
+          <!-- Original 5 cards -->
+          <div class="testimonial-card" v-for="i in 5" :key="i">
+            <div class="testimonial-header">
+              <img src="https://www.w3schools.com/howto/img_avatar.png" class="avatar" />
+              <span class="customer-name">sabrina</span>
+            </div>
+            <p class="testimonial-text">"kalau ditanya sesuai dari ekspetasi, malah melebihi ekspetasi awal stur"</p>
+          </div>
+          <!-- Duplicate 5 cards untuk seamless loop -->
+          <div class="testimonial-card" v-for="i in 5" :key="i + 5">
+            <div class="testimonial-header">
+              <img src="https://www.w3schools.com/howto/img_avatar.png" class="avatar" />
+              <span class="customer-name">sabrina</span>
+            </div>
+            <p class="testimonial-text">"kalau ditanya sesuai dari ekspetasi, malah melebihi ekspetasi awal stur"</p>
+          </div>
         </div>
-        <p class="testimonial-text">"kalau ditanya sesuai dari ekspetasi, malah melebihi ekspetasi awal stur"</p>
       </div>
-      <!-- Duplicate 5 cards untuk seamless loop -->
-      <div class="testimonial-card" v-for="i in 5" :key="i + 5">
-        <div class="testimonial-header">
-          <img src="https://www.w3schools.com/howto/img_avatar.png" class="avatar" />
-          <span class="customer-name">sabrina</span>
-        </div>
-        <p class="testimonial-text">"kalau ditanya sesuai dari ekspetasi, malah melebihi ekspetasi awal stur"</p>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <!-- Gallery -->
-   <section class="gallery" v-scroll-reveal>
-    <div class="gallery-container">
-      <h2><strong>OUR</strong> <em>FACILITY</em></h2>
-      
-      <div class="gallery-grid" :class="{ 'expanded': showAllPhotos }">
-        <div 
-          class="gallery-card" 
-          v-for="(item, index) in displayedItems" 
-          :key="index"
-          :class="{ 'hidden-item': index >= 5 && !showAllPhotos }"
-        >
-          <div class="image-container">
-            <img :src="item.image" :alt="item.title" />
-            <div class="overlay">
-              <div class="card-content">
-                <h3>{{ item.title }}</h3>
-                <p>{{ item.description }}</p>
+    <section class="gallery" v-scroll-reveal>
+      <div class="gallery-container">
+        <h2><strong>OUR</strong> <em>FACILITY</em></h2>
+        
+        <div class="gallery-grid" :class="{ 'expanded': showAllPhotos }">
+          <div 
+            class="gallery-card" 
+            v-for="(item, index) in displayedItems" 
+            :key="index"
+            :class="{ 'hidden-item': index >= 5 && !showAllPhotos }"
+          >
+            <div class="image-container">
+              <img :src="item.image" :alt="item.title" />
+              <div class="overlay">
+                <div class="card-content">
+                  <h3>{{ item.title }}</h3>
+                  <p>{{ item.description }}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        
+        <button 
+          class="view-all-btn" 
+          @click="toggleGallery"
+          :class="{ 'expanded': showAllPhotos }"
+        >
+          {{ showAllPhotos ? 'Show Less' : 'View All Gallery' }}
+        </button>
       </div>
-      
-      <button 
-        class="view-all-btn" 
-        @click="toggleGallery"
-        :class="{ 'expanded': showAllPhotos }"
-      >
-        {{ showAllPhotos ? 'Show Less' : 'View All Gallery' }}
-      </button>
-    </div>
-  </section>
+    </section>
   </div>
-      <AppFooter />
+  <AppFooter />
 </template>
 
 <script>
@@ -107,14 +107,62 @@ import AppFooter from '@/components/AppFooter.vue'
 
 export default {
   name: 'LandingPage',
-   components: {
+  components: {
     AppFooter
+  },
+  data() {
+    return {
+      showAllPhotos: false,
+      displayedItems: [
+        // Tambahkan data gallery items jika belum ada
+        {
+          title: "Cozy Interior",
+          description: "Comfortable seating area",
+          image: require('@/assets/hero-bg.png')
+        },
+        {
+          title: "Coffee Bar",
+          description: "Professional coffee making station",
+          image: require('@/assets/hero-bg.png')
+        },
+        {
+          title: "Outdoor Seating",
+          description: "Fresh air dining experience",
+          image: require('@/assets/hero-bg.png')
+        },
+        {
+          title: "Private Room",
+          description: "Perfect for meetings",
+          image: require('@/assets/hero-bg.png')
+        },
+        {
+          title: "Kitchen",
+          description: "Clean and modern kitchen",
+          image: require('@/assets/hero-bg.png')
+        },
+        {
+          title: "Art Corner",
+          description: "Local art displays",
+          image: require('@/assets/hero-bg.png')
+        }
+      ]
+    }
+  },
+  methods: {
+    goToMenu() {
+      // Navigasi ke halaman menu
+      this.$router.push('/menu');
+    },
+    toggleGallery() {
+      this.showAllPhotos = !this.showAllPhotos;
+    }
   },
   directives: {
     scrollReveal: {
       mounted(el) {
         el.style.opacity = 0;
         el.style.transform = 'translateY(40px)';
+        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
         const observer = new IntersectionObserver(
           ([entry]) => {
             if (entry.isIntersecting) {
@@ -156,7 +204,6 @@ export default {
     counters.forEach(counter => observer.observe(counter));
   }
 };
-
 </script>
 
 <style>
