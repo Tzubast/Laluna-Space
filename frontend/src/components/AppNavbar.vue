@@ -7,14 +7,42 @@
       <li><router-link to="/">about</router-link></li>
       <li><router-link to="/menu">menu</router-link></li>
       <li><router-link to="/services">services</router-link></li>
-      <li><router-link to="/contact">contact</router-link></li>
+      <li><a href="#" @click="scrollToFooter">contact</a></li>
     </ul>
   </nav>
 </template>
 
 <script>
 export default {
-  name: "AppNavbar"
+  name: "AppNavbar",
+  methods: {
+    scrollToFooter() {
+      // Jika sedang tidak di landing page, redirect ke landing page dulu
+      if (this.$route.path !== '/') {
+        this.$router.push('/').then(() => {
+          // Tunggu sebentar untuk memastikan halaman sudah ter-render
+          this.$nextTick(() => {
+            setTimeout(() => {
+              this.performScroll();
+            }, 100);
+          });
+        });
+      } else {
+        // Jika sudah di landing page, langsung scroll
+        this.performScroll();
+      }
+    },
+    
+    performScroll() {
+      const footer = document.querySelector('.app-footer') || document.querySelector('footer');
+      if (footer) {
+        footer.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }
+  }
 }
 </script>
 
@@ -64,6 +92,7 @@ export default {
   font-family: 'Inter', sans-serif;
   font-size: 0.95rem;
   line-height: 1;
+  cursor: pointer;
 }
 
 .nav-links li a:hover {

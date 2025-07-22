@@ -26,7 +26,7 @@
             </svg>
           </div>
           <div class="contact-content">
-            <h3>Call Us</h3>
+            <h3>Call Us (WhatsApp Only)</h3>
             <p>+62 896 1736 8926</p>
           </div>
         </a>
@@ -70,10 +70,10 @@
         <div class="footer-column">
           <h4>Quick links</h4>
           <ul class="footer-menu">
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#facility">Facility</a></li>
-            <li><a href="#menu">Menu</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="/">About Us</a></li>
+            <li><a href="menu">Menu</a></li>
+            <li><a href="services">Services</a></li>
+            <li><a href="contact">Contact</a></li>
           </ul>
         </div>
 

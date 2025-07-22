@@ -1,6 +1,7 @@
 <template>
   <div class="landing-page">
     <AppNavbar />
+    
     <!-- Hero Section -->
     <section class="hero" v-scroll-reveal>
       <div class="overlay">
@@ -75,15 +76,39 @@
             class="gallery-card" 
             v-for="(item, index) in displayedItems" 
             :key="index"
-            :class="{ 'hidden-item': index >= 5 && !showAllPhotos }"
+            v-show="showAllPhotos || index < 6"
           >
             <div class="image-container">
               <img :src="item.image" :alt="item.title" />
-              <div class="overlay">
+              <div class="overlay-card">
                 <div class="card-content">
                   <h3>{{ item.title }}</h3>
                   <p>{{ item.description }}</p>
                 </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Special Services Card -->
+          <div 
+            class="gallery-card services-card" 
+            v-show="showAllPhotos"
+            @click="goToServices"
+          >
+            <div class="services-content">
+              <div class="services-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L2 7V10C2 16 6 20.5 12 22C18 20.5 22 16 22 10V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M9 12L11 14L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3>More Facilities</h3>
+              <p>Ayo cek fasilitas kami yang lain</p>
+              <div class="services-arrow">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M7 7H17V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </div>
             </div>
           </div>
@@ -92,29 +117,43 @@
         <button 
           class="view-all-btn" 
           @click="toggleGallery"
-          :class="{ 'expanded': showAllPhotos }"
         >
           {{ showAllPhotos ? 'Show Less' : 'View All Gallery' }}
         </button>
       </div>
     </section>
+
+    <!-- Popup Widget -->
+    <PopupWidget 
+      ref="popupWidget"
+      :title="popupConfig.title"
+      :description="popupConfig.description"
+      :button-text="popupConfig.buttonText"
+      :popup-image="popupConfig.image"
+      :auto-close-delay="popupConfig.autoCloseDelay"
+      :show-on-mount="popupConfig.showOnMount"
+      @popup-opened="onPopupOpened"
+      @popup-closed="onPopupClosed"
+      @button-clicked="onPopupButtonClicked"
+    />
   </div>
   <AppFooter />
 </template>
 
 <script>
 import AppFooter from '@/components/AppFooter.vue'
+import PopupWidget from '@/components/PopupWidget.vue'
 
 export default {
   name: 'LandingPage',
   components: {
-    AppFooter
+    AppFooter,
+    PopupWidget
   },
   data() {
     return {
       showAllPhotos: false,
       displayedItems: [
-        // Tambahkan data gallery items jika belum ada
         {
           title: "Cozy Interior",
           description: "Comfortable seating area",
@@ -144,17 +183,50 @@ export default {
           title: "Art Corner",
           description: "Local art displays",
           image: require('@/assets/hero-bg.png')
+        },
+        {
+          title: "Reading Corner",
+          description: "Quiet space for reading",
+          image: require('@/assets/hero-bg.png')
+        },
+        {
+          title: "Event Space",
+          description: "Perfect for celebrations",
+          image: require('@/assets/hero-bg.png')
         }
-      ]
+      ],
+      // Popup configuration
+      popupConfig: {
+        title: 'Welcome to La Luna Space',
+        description: 'Nikmati pengalaman kuliner yang tak terlupakan di tempat yang cozy dan nyaman. Dengan berbagai menu pilihan terbaik untuk food dan beverage!',
+        buttonText: 'Explore Menu',
+        image: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=400&fit=crop&crop=center',
+        autoCloseDelay: 5000,
+        showOnMount: true
+      }
     }
   },
   methods: {
     goToMenu() {
-      // Navigasi ke halaman menu
       this.$router.push('/menu');
+    },
+    goToServices() {
+      this.$router.push('/services');
     },
     toggleGallery() {
       this.showAllPhotos = !this.showAllPhotos;
+    },
+    onPopupOpened() {
+      console.log('Popup opened');
+      document.body.classList.add('popup-active');
+    },
+    onPopupClosed() {
+      console.log('Popup closed');
+      document.body.classList.remove('popup-active');
+    },
+    onPopupButtonClicked() {
+      console.log('Popup button clicked');
+      this.goToMenu();
     }
   },
   directives: {
@@ -224,10 +296,12 @@ body {
 .landing-page {
   margin: 0;
   padding: 0;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 section {
-  min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -254,15 +328,15 @@ section[v-scroll-reveal].v-enter-to {
   background-image: url('@/assets/hero-bg.png');
   background-size: cover;
   background-position: center;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
+  min-height: 600px;
   position: relative;
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
-  /* Kompensasi tinggi navbar agar hero section tidak tertutup */
-  margin-top: -80px; /* Sesuaikan dengan tinggi navbar */
-  padding-top: 80px; /* Sesuaikan dengan tinggi navbar */
+  margin-top: -80px;
+  padding-top: 80px;
 }
 
 .overlay {
@@ -281,8 +355,8 @@ section[v-scroll-reveal].v-enter-to {
 }
 
 .hero-content h1 {
-  font-size: 32px;
-  line-height: 1;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  line-height: 1.2;
   letter-spacing: 0;
   margin-bottom: 2rem;
 }
@@ -294,11 +368,13 @@ section[v-scroll-reveal].v-enter-to {
   padding: 0.75rem 2rem;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  border-radius: 4px;
 }
 
 .explore-btn:hover {
   background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
 }
 
 .about {
@@ -311,6 +387,7 @@ section[v-scroll-reveal].v-enter-to {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 40px;
+  width: 100%;
 }
 
 .about-header {
@@ -319,7 +396,7 @@ section[v-scroll-reveal].v-enter-to {
 }
 
 .about-header h2 {
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: bold;
   color: #ffffff;
   margin: 0;
@@ -342,7 +419,8 @@ section[v-scroll-reveal].v-enter-to {
 
 .about-image {
   flex: 1;
-  min-width: 400px;
+  min-width: 300px;
+  max-width: 500px;
 }
 
 .about-img {
@@ -355,12 +433,12 @@ section[v-scroll-reveal].v-enter-to {
 .about-text {
   flex: 1;
   text-align: right;
-  min-width: 400px;
+  min-width: 300px;
   padding-left: 40px;
 }
 
 .about-text h3 {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
   color: #ffffff;
   margin-bottom: 30px;
   line-height: 1.2;
@@ -391,7 +469,7 @@ section[v-scroll-reveal].v-enter-to {
 }
 
 .stat-item .count {
-  font-size: 4rem;
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: bold;
   display: block;
   color: #ffffff;
@@ -403,32 +481,6 @@ section[v-scroll-reveal].v-enter-to {
   color: #ffffff;
   margin-top: 5px;
   margin-bottom: 0;
-}
-
-@media (max-width: 768px) {
-  .about-content {
-    flex-direction: column;
-    gap: 40px;
-  }
-  
-  .about-image,
-  .about-text {
-    min-width: auto;
-  }
-  
-  .about-text {
-    text-align: left;
-    padding-left: 0;
-  }
-  
-  .stats {
-    justify-content: center;
-    gap: 40px;
-  }
-  
-  .about-header h2 {
-    font-size: 2.5rem;
-  }
 }
 
 .testimonials {
@@ -446,7 +498,7 @@ section[v-scroll-reveal].v-enter-to {
 }
 
 .testimonials h2 {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
   color: #ffffff;
   margin-bottom: 60px;
   font-style: italic;
@@ -457,7 +509,7 @@ section[v-scroll-reveal].v-enter-to {
   display: flex;
   animation: slide 20s linear infinite;
   gap: 30px;
-  width: calc(300px * 10 + 30px * 9); /* Width untuk 10 cards + gaps */
+  width: calc(300px * 10 + 30px * 9);
 }
 
 @keyframes slide {
@@ -465,20 +517,20 @@ section[v-scroll-reveal].v-enter-to {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-300px * 5 - 30px * 4)); /* Geser sebesar 5 cards + gaps */
+    transform: translateX(calc(-300px * 5 - 30px * 4));
   }
 }
 
 .testimonial-card {
   width: 300px;
-  min-width: 300px; /* Prevent shrinking */
+  min-width: 300px;
   background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 25px;
   text-align: left;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  flex-shrink: 0; /* Prevent cards from shrinking */
+  flex-shrink: 0;
 }
 
 .testimonial-card:hover {
@@ -515,12 +567,262 @@ section[v-scroll-reveal].v-enter-to {
   font-style: italic;
 }
 
-/* Pause animation on hover */
 .testimonial-wrapper:hover {
   animation-play-state: paused;
 }
 
+/* Gallery Section */
+.gallery {
+  background-color: #000;
+  padding: 80px 0;
+  min-height: auto;
+}
+
+.gallery-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  width: 100%;
+}
+
+.gallery h2 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: #ffffff;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.gallery h2 strong {
+  font-weight: bold;
+}
+
+.gallery h2 em {
+  font-style: italic;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+  transition: all 0.5s ease;
+}
+
+.gallery-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.gallery-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1);
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-card:hover .image-container img {
+  transform: scale(1.1);
+}
+
+.overlay-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    transparent 0%, 
+    transparent 50%, 
+    rgba(0, 0, 0, 0.7) 80%, 
+    rgba(0, 0, 0, 0.9) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-card:hover .overlay-card {
+  opacity: 1;
+}
+
+.card-content h3 {
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  transform: translateY(10px);
+  transition: transform 0.3s ease 0.1s;
+}
+
+.card-content p {
+  color: #cccccc;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+  transform: translateY(10px);
+  transition: transform 0.3s ease 0.2s;
+}
+
+.gallery-card:hover .card-content h3,
+.gallery-card:hover .card-content p {
+  transform: translateY(0);
+}
+
+.view-all-btn {
+  display: block;
+  margin: 40px auto 0;
+  background: linear-gradient(135deg, #4A90E2, #357ABD);
+  border: none;
+  color: white;
+  padding: 12px 35px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+
+.view-all-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(74, 144, 226, 0.4);
+  background: linear-gradient(135deg, #357ABD, #4A90E2);
+}
+
+.view-all-btn:active {
+  transform: translateY(-1px);
+}
+
+/* Services Card Styling */
+.services-card {
+  background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%) !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.services-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.services-card:hover::before {
+  left: 100%;
+}
+
+.services-card:hover {
+  transform: translateY(-12px) scale(1.05) !important;
+  box-shadow: 0 20px 50px rgba(74, 144, 226, 0.3) !important;
+}
+
+.services-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  padding: 30px 20px;
+  text-align: center;
+  position: relative;
+}
+
+.services-icon {
+  color: #ffffff;
+  margin-bottom: 20px;
+  transform: scale(1);
+  transition: transform 0.3s ease;
+}
+
+.services-card:hover .services-icon {
+  transform: scale(1.1);
+}
+
+.services-content h3 {
+  color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.services-content p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  font-weight: 500;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.services-arrow {
+  color: #ffffff;
+  opacity: 0.8;
+  transform: translateX(0) translateY(0);
+  transition: all 0.3s ease;
+}
+
+.services-card:hover .services-arrow {
+  opacity: 1;
+  transform: translateX(5px) translateY(-2px);
+}
+
+.services-card:hover .services-content h3,
+.services-card:hover .services-content p {
+  transform: translateY(-3px);
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
+  .about-content {
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .about-image,
+  .about-text {
+    min-width: auto;
+  }
+  
+  .about-text {
+    text-align: left;
+    padding-left: 0;
+  }
+  
+  .stats {
+    justify-content: center;
+    gap: 40px;
+  }
+  
   .testimonials-container {
     padding: 0 20px;
   }
@@ -543,46 +845,31 @@ section[v-scroll-reveal].v-enter-to {
     }
   }
   
-  .testimonials h2 {
-    font-size: 2rem;
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .image-container {
+    height: 200px;
+  }
+  
+  .gallery-container {
+    padding: 0 20px;
   }
 }
 
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.gallery-item {
-  position: relative;
-}
-
-.gallery-item img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-.caption {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  color: white;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 4px 8px;
-  border-radius: 4px;
-}
-
-.view-all {
-  margin-top: 20px;
-  background-color: rgba(255, 255, 255, 0.08);
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 4px;
-}
-</style>
+@media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .hero-content h1 {
+    font-size: 1.5rem;
+  }
+  
+  section {
+    padding: 40px 15px;
+  }
+}</style>
