@@ -1,177 +1,161 @@
-  <template>
-    <div class="menu-page">
-      <AppNavbar />
-      
-      <!-- Section 1: Header/Title -->
-      <section class="menu-header" v-scroll-reveal>
-        <div class="menu-header-content">
-          <h1>Our Menu</h1>
-          <p>Explore our menu and choose which of favorite one</p>
-        </div>
-      </section>
+<template>
+  <div class="menu-page">
+    <AppNavbar />
 
-      <!-- Section 2: Category Filter -->
-      <section class="menu-filter" v-scroll-reveal>
-        <div class="filter-container">
-          <button 
-            v-for="category in categories" 
-            :key="category.id"
-            :class="['filter-btn', { active: selectedCategory === category.id }]"
-            @click="selectCategory(category.id)"
-          >
-            {{ category.name }}
-          </button>
-        </div>
-      </section>
+    <!-- Section 1: Header -->
+    <section class="menu-header" v-scroll-reveal>
+      <div class="menu-header-content">
+        <h1>Our Menu</h1>
+        <p>Explore our menu and choose which of favorite one</p>
+      </div>
+    </section>
 
-      <!-- Section 3: Menu Grid -->
-      <section class="menu-grid-section" v-scroll-reveal>
-        <div class="menu-grid">
-          <div 
-            v-for="item in filteredMenu" 
-            :key="item.id"
-            class="menu-item"
-          >
-            <div class="menu-item-image">
-              <img :src="item.image" :alt="item.name" />
-            </div>
-            <div class="menu-item-content">
-              <h3>{{ item.name }}</h3>
-              <p class="menu-item-description">{{ item.description }}</p>
-              <div class="menu-item-price">{{ item.price }}</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </template>
+    <!-- Section 2: Category Filter -->
+    <section class="menu-filter" v-scroll-reveal>
+      <div class="filter-container">
+        <!-- Category Filter Button -->
+<button 
+  v-for="category in categories" 
+  :key="category.id"
+  :class="[
+    'filter-btn', 
+    { active: selectedCategory === category.id },
+    { morning: category.id === 'morning' }
+  ]"
+  @click="selectCategory(category.id)"
+>
+  <span v-if="category.id === 'morning'" class="sun-icon"></span>
+  {{ category.name }}
+</button>
+      </div>
+    </section>
 
-  <script>
-  export default {
-    name: 'MenuPage',
-    directives: {
-      scrollReveal: {
-        mounted(el) {
-          el.style.opacity = 0;
-          el.style.transform = 'translateY(40px)';
-          const observer = new IntersectionObserver(
-            ([entry]) => {
-              if (entry.isIntersecting) {
-                el.style.opacity = 1;
-                el.style.transform = 'translateY(0)';
-                observer.unobserve(el);
-              }
-            },
-            { threshold: 0.1 }
-          );
-          observer.observe(el);
-        },
+    <!-- Section 3: Menu Grid -->
+    <section class="menu-grid-section" v-scroll-reveal>
+      <div class="menu-grid">
+        <div 
+  v-for="item in filteredMenu" 
+  :key="item.id"
+  :class="['menu-item', { 'morning-only': item.category === 'morning' }]"
+>
+  <div class="menu-item-image">
+    <img :src="item.image" :alt="item.name" />
+  </div>
+  <div v-if="item.category !== 'morning'" class="menu-item-content">
+    <h3>{{ item.name }}</h3>
+    <p class="menu-item-description">{{ item.description }}</p>
+    <div class="menu-item-price">{{ item.price }}</div>
+  </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'MenuPage',
+  directives: {
+    scrollReveal: {
+      mounted(el) {
+        el.style.opacity = 0;
+        el.style.transform = 'translateY(40px)';
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              el.style.opacity = 1;
+              el.style.transform = 'translateY(0)';
+              observer.unobserve(el);
+            }
+          },
+          { threshold: 0.1 }
+        );
+        observer.observe(el);
       },
     },
-    data() {
-      return {
-        selectedCategory: 'all',
-        categories: [
-          { id: 'all', name: 'All Menu' },
-          { id: 'snack', name: 'Snack' },
-          { id: 'western', name: 'Western' },
-          { id: 'indonesian', name: 'Indonesian' },
-          { id: 'rice-bowl', name: 'Rice Bowl' },
-          { id: 'coffee', name: 'Coffee' },
-          { id: 'frappe', name: 'Frappe' },
-          { id: 'refresher', name: 'Refresher' }
-        ],
-        menuItems: [
-          {
-            id: 1,
-            name: 'Nasi Goreng',
-            description: 'Traditional Indonesian fried rice with authentic spices',
-            price: '25K',
-            category: 'indonesian',
-            image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop'
-          },
-          {
-            id: 2,
-            name: 'Coffee Creamy Melt',
-            description: 'Rich and creamy coffee blend with perfect balance',
-            price: '22K',
-            category: 'coffee',
-            image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop'
-          },
-          {
-            id: 3,
-            name: 'Milosaurus',
-            description: 'Special signature drink with unique flavor combination',
-            price: '27K',
-            category: 'refresher',
-            image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=300&fit=crop'
-          },
-          {
-            id: 4,
-            name: 'Beef Burger',
-            description: 'Juicy beef patty with fresh vegetables and special sauce',
-            price: '35K',
-            category: 'western',
-            image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop'
-          },
-          {
-            id: 5,
-            name: 'Chicken Rice Bowl',
-            description: 'Tender chicken served over steamed rice with vegetables',
-            price: '28K',
-            category: 'rice-bowl',
-            image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop'
-          },
-          {
-            id: 6,
-            name: 'Chocolate Frappe',
-            description: 'Iced blended chocolate drink topped with whipped cream',
-            price: '24K',
-            category: 'frappe',
-            image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop'
-          },
-          {
-            id: 7,
-            name: 'French Fries',
-            description: 'Crispy golden potato fries with special seasoning',
-            price: '18K',
-            category: 'snack',
-            image: 'https://images.unsplash.com/photo-1576107232684-1279f390859f?w=400&h=300&fit=crop'
-          },
-          {
-            id: 8,
-            name: 'Rendang Rice Bowl',
-            description: 'Traditional Indonesian rendang served with steamed rice',
-            price: '32K',
-            category: 'rice-bowl',
-            image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop'
-          },
-          {
-            id: 9,
-            name: 'Iced Lemon Tea',
-            description: 'Refreshing lemon tea served with ice and mint leaves',
-            price: '15K',
-            category: 'refresher',
-            image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop'
-          }
-        ]
-      }
+  },
+  data() {
+    return {
+      selectedCategory: 'all',
+      categories: [
+        { id: 'all', name: 'All Menu' },
+        { id: 'coffee-based', name: 'Coffee Based' },
+        { id: 'flavor-latte', name: 'Flavor Latte' },
+        { id: 'non-coffee', name: 'Non Coffee' },
+        { id: 'smoothies', name: 'Smoothies' },
+        { id: 'refreshner', name: 'Refreshner' },
+        { id: 'frappe', name: 'Frappe' },
+        { id: 'tea-based', name: 'Tea Based' },
+        { id: 'snack', name: 'Snack' },
+        { id: 'platter', name: 'Platter' },
+        { id: 'wingers', name: 'Wingers' },
+        { id: 'western', name: 'Western' },
+        { id: 'spaghetti', name: 'Spaghetti / Fettucine' },
+        { id: 'nasi-goreng', name: 'Nasi Goreng' },
+        { id: 'rice-bowl', name: 'Rice Bowl' },
+        { id: 'indonesia', name: 'Indonesia Cuisine' },
+        { id: 'dessert', name: 'Dessert' },
+        { id: 'morning', name: 'Morning Choice' }
+      ],
+      menuItems: []
+    };
+  },
+  created() {
+    this.menuItems = this.generateMenuItems();
+  },
+  methods: {
+    selectCategory(categoryId) {
+      this.selectedCategory = categoryId;
     },
-    computed: {
-      filteredMenu() {
-        if (this.selectedCategory === 'all') {
-          return this.menuItems;
+    generateMenuItems() {
+      const items = [];
+      const categoriesWithCount = {
+        'coffee-based': 4,
+        'flavor-latte': 8,
+        'non-coffee': 6,
+        'smoothies': 3,
+        'refreshner': 5,
+        'frappe': 3,
+        'tea-based': 5,
+        'snack': 12,
+        'platter': 3,
+        'wingers': 2,
+        'western': 2,
+        'spaghetti': 2,
+        'nasi-goreng': 4,
+        'rice-bowl': 10,
+        'indonesia': 3,
+        'dessert': 7,
+        'morning': 1,
+      };
+
+      let idCounter = 1;
+      for (const [category, count] of Object.entries(categoriesWithCount)) {
+        for (let i = 1; i <= count; i++) {
+          items.push({
+            id: idCounter++,
+            name: `${category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} ${i}`,
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            price: `${15 + Math.floor(Math.random() * 20)}K`,
+            category: category,
+            image: `https://source.unsplash.com/400x300/?food,drink&sig=${idCounter}`
+          });
         }
-        return this.menuItems.filter(item => item.category === this.selectedCategory);
       }
-    },
-    methods: {
-      selectCategory(categoryId) {
-        this.selectedCategory = categoryId;
-      }
+
+      return items;
     }
-  };
-  </script>
+  },
+  computed: {
+    filteredMenu() {
+      if (this.selectedCategory === 'all') {
+        return this.menuItems;
+      }
+      return this.menuItems.filter(item => item.category === this.selectedCategory);
+    }
+  }
+};
+</script>
 
   <style scoped>
   * {
@@ -387,7 +371,38 @@
       padding: 60px 0;
     }
   }
+   /* Matahari animasi */
+.sun-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFD700 0%, #FFA500 100%);
+  animation: sunPulse 2s infinite ease-in-out;
+  margin-right: 8px;
+  display: inline-block;
+}
 
+@keyframes sunPulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+/* Button khusus Morning */
+.filter-btn.morning {
+  background: linear-gradient(45deg, #FFF8DC, #FFD700);
+  color: #000;
+  font-weight: bold;
+  border-color: #FFD700;
+  position: relative;
+  overflow: hidden;
+}
+/* Ukuran khusus Morning */
+.menu-item.morning-only .menu-item-image {
+  width: 421px;
+  height: 759px;
+  margin: 0 auto;
+}
   @media (max-width: 480px) {
     .menu-header {
       height: 50vh;

@@ -12,59 +12,60 @@
       </div>
     </section>
 
-    <!-- About Us -->
-    <section class="about" v-scroll-reveal>
-      <div class="about-container">
-        <div class="about-header">
-          <h2>ABOUT US</h2>
-          <div class="blue-underline"></div>
-        </div>
-        <div class="about-content">
-          <div class="about-image">
-            <img :src="require('@/assets/about-img.png')" alt="cashier" class="about-img" />
+<!-- About Us -->
+<section class="about" v-scroll-reveal>
+  <div class="about-container">
+    <div class="about-header">
+      <h2>ABOUT US</h2>
+      <div class="blue-underline"></div>
+    </div>
+    <div class="about-content">
+      <div class="about-image">
+        <img :src="require('@/assets/about-img.png')" alt="cashier" class="about-img" />
+      </div>
+      <div class="about-text">
+        <h3>Hello,<br />Welcome to <em>La Luna Space</em></h3>
+        <p>
+          <strong>Laluna Space</strong> adalah <strong>cafe nyaman di Malang</strong> yang menawarkan konsep ruang 
+          <strong>hangat dan modern</strong> di lokasi strategis, ideal untuk bersantai, bekerja, atau berkumpul. 
+          Dengan semangat "Mari Bersua", kami menyajikan <strong>beragam menu</strong> mulai dari hidangan berat hingga ringan dan minuman segar, 
+          semua disiapkan dengan bahan berkualitas tinggi untuk kepuasan Anda. Tersedia area indoor dan semi outdoor yang luas, 
+          menjadikan <strong>Laluna Space</strong> pilihan sempurna sebagai <strong>venue untuk acaramu di Malang</strong>, termasuk 
+          <strong>meeting, konferensi, hingga pernikahan</strong>, dengan fasilitas fleksibel dan layanan personal demi pengalaman tak terlupakan.
+        </p>
+        <div class="stats">
+          <div class="stat-item">
+            <span class="count" data-target="50">0</span>
+            <p>Food</p>
           </div>
-          <div class="about-text">
-            <h3>Hello,<br />Welcome to <em>La Luna Space</em></h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tincidunt lobortis volutpat. Mauris in faucibus nunc. Sed efficitur accumsan magna nec tempus. Pellentesque varius pulvinar justo nec convallis. Ut quis pharetra dolor, vitae rhoncus felis. Quisque egestas nunc dolor, in volutpat leo ornare quis. Aenean dapibus ex sed ex mattis, sit amet volutpat enim lacinia.</p>
-            <div class="stats">
-              <div class="stat-item">
-                <span class="count" data-target="50">0</span>
-                <p>Food</p>
-              </div>
-              <div class="stat-item">
-                <span class="count" data-target="50">0</span>
-                <p>Beverage</p>
-              </div>
-            </div>
+          <div class="stat-item">
+            <span class="count" data-target="50">0</span>
+            <p>Beverage</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- Testimonials -->
-    <section class="testimonials" v-scroll-reveal>
-      <div class="testimonials-container">
-        <h2>customer says</h2>
-        <div class="testimonial-wrapper">
-          <!-- Original 5 cards -->
-          <div class="testimonial-card" v-for="i in 5" :key="i">
-            <div class="testimonial-header">
-              <img src="https://www.w3schools.com/howto/img_avatar.png" class="avatar" />
-              <span class="customer-name">sabrina</span>
-            </div>
-            <p class="testimonial-text">"kalau ditanya sesuai dari ekspetasi, malah melebihi ekspetasi awal stur"</p>
-          </div>
-          <!-- Duplicate 5 cards untuk seamless loop -->
-          <div class="testimonial-card" v-for="i in 5" :key="i + 5">
-            <div class="testimonial-header">
-              <img src="https://www.w3schools.com/howto/img_avatar.png" class="avatar" />
-              <span class="customer-name">sabrina</span>
-            </div>
-            <p class="testimonial-text">"kalau ditanya sesuai dari ekspetasi, malah melebihi ekspetasi awal stur"</p>
-          </div>
+ <!-- Testimonials -->
+<section class="testimonials" v-scroll-reveal>
+  <div class="testimonials-container">
+    <h2>customer says</h2>
+    <div class="testimonial-wrapper">
+      <div class="testimonial-card" 
+           v-for="(item, index) in loopingTestimonials" 
+           :key="index">
+        <div class="testimonial-header">
+          <img :src="item.avatar" class="avatar" />
+          <span class="customer-name">{{ item.name }}</span>
         </div>
+        <p class="testimonial-text">"{{ item.text }}"</p>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
+
 
     <!-- Gallery -->
     <section class="gallery" v-scroll-reveal>
@@ -153,6 +154,33 @@ export default {
   data() {
     return {
       showAllPhotos: false,
+      testimonials: [
+        {
+          name: 'Nusa',
+          avatar: 'https://lh3.googleusercontent.com/a-/ALV-UjXqDT7U06mYf-xjYqB1-d-mAhorzEearC9vaLmjYqKflaemxLef=w108-h108-p-rp-mo-ba5-br100',
+          text: 'Enak banget buat WFC! Tempat bersih, sepi, luas dan tersedia banyak tempat parkir. Chicken Curry nya enak, suka katsu nya yang juicy. Pelayanan mereka ramah sekaliii. Kasir dan waitress nya ramah sangat. Karna tempatnya udah bagus, lebih baik penyajian untuk minuman nya pake gelas.'
+        },
+        {
+          name: 'Nur Aisyah Ari Yusuf',
+          avatar: 'https://lh3.googleusercontent.com/a-/ALV-UjUofvoEReqOoIfbwKOpNRV2ZZSwzgngW4kw7lHpf4QwMZuy4h1v=w108-h108-p-rp-mo-ba3-br100',
+          text: 'Best place buat WFC. Parkiran luas, makanan minumannya enak & affordable, wifi kencang. Mantap pokoknya.'
+        },
+        {
+          name: 'Putri Sadini',
+          avatar: 'https://lh3.googleusercontent.com/a-/ALV-UjWUrxLu2MDd2yMO7JNrMFhHh7dLGukvbgjxX5wsBwN8xnbfHbdd=w108-h108-p-rp-mo-ba2-br100',
+          text: 'Asli ini kafenya good bangett Kopi dan snacknya enak, harga ramah kantong untuk service dan tempat yg mewah. Suasananya juga nyaman. Baru sekali ke sini kukira harganya mahal" ternyata engga. Recommended banget👍🏻'
+        },
+        {
+          name: 'Nareswara',
+          avatar: 'https://lh3.googleusercontent.com/a-/ALV-UjUSOJ5icBB3YgdUMcWoUnjSCdwE8DJn_nT9BpOyan6BTPbbi24=w108-h108-p-rp-mo-br100',
+          text: 'Tempat nya nyaman sekali untuk berkumpul. Vibe nya,pencahayaan nya,suhu ruangan nya,makanan dan minuman nya,tempat parkir nya juga cukup untuk lumayan banyak untuk mobil dan motor. Untuk tempat seperti ini harga nya sangat-sangat murah dan sangat layak. Tetap di pertahankan ya kualitas nya 👍🏻👍🏻'
+        },
+        {
+          name: 'andy (aselimalang channel)',
+          avatar: 'https://lh3.googleusercontent.com/a-/ALV-UjWJk-VxCraaFpet_NKgX48PKe8wuc1yjn2eK5VAFxxDnvL77c9BVg=w108-h108-p-rp-mo-ba6-br100',
+          text: 'Tempat nyaman, makanan enak. Parkirnya juga luas, staf cukup ramah. Bisa juga digunakan untuk even atau acara lain, tersedia beberap ruang khusus'
+        }
+      ],
       displayedItems: [
         {
           title: "Cozy Interior",
@@ -195,7 +223,6 @@ export default {
           image: require('@/assets/hero-bg.png')
         }
       ],
-      // Popup configuration
       popupConfig: {
         title: 'Welcome to La Luna Space',
         description: 'Nikmati pengalaman kuliner yang tak terlupakan di tempat yang cozy dan nyaman. Dengan berbagai menu pilihan terbaik untuk food dan beverage!',
@@ -204,6 +231,12 @@ export default {
         autoCloseDelay: 5000,
         showOnMount: true
       }
+    }
+  },
+  computed: {
+    loopingTestimonials() {
+      // Duplikat data untuk seamless looping animasi
+      return [...this.testimonials, ...this.testimonials];
     }
   },
   methods: {
@@ -246,8 +279,8 @@ export default {
           { threshold: 0.1 }
         );
         observer.observe(el);
-      },
-    },
+      }
+    }
   },
   mounted() {
     const counters = document.querySelectorAll('.count');
@@ -277,6 +310,7 @@ export default {
   }
 };
 </script>
+
 
 <style>
 * {
@@ -872,4 +906,5 @@ section[v-scroll-reveal].v-enter-to {
   section {
     padding: 40px 15px;
   }
-}</style>
+}
+</style>
