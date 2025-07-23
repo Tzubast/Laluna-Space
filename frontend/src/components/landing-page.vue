@@ -153,7 +153,7 @@ export default {
   },
   data() {
     return {
-      showAllPhotos: false,
+      showAllPhotos: false, 
       testimonials: [
         {
           name: 'Nusa',
