@@ -66,63 +66,65 @@
   </div>
 </section>
 
-
-    <!-- Gallery -->
-    <section class="gallery" v-scroll-reveal>
-      <div class="gallery-container">
-        <h2><strong>OUR</strong> <em>FACILITY</em></h2>
-        
-        <div class="gallery-grid" :class="{ 'expanded': showAllPhotos }">
-          <div 
-            class="gallery-card" 
-            v-for="(item, index) in displayedItems" 
-            :key="index"
-            v-show="showAllPhotos || index < 6"
-          >
-            <div class="image-container">
-              <img :src="item.image" :alt="item.title" />
-              <div class="overlay-card">
-                <div class="card-content">
-                  <h3>{{ item.title }}</h3>
-                  <p>{{ item.description }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Special Services Card -->
-          <div 
-            class="gallery-card services-card" 
-            v-show="showAllPhotos"
-            @click="goToServices"
-          >
-            <div class="services-content">
-              <div class="services-icon">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L2 7V10C2 16 6 20.5 12 22C18 20.5 22 16 22 10V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M9 12L11 14L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <h3>More Facilities</h3>
-              <p>Ayo cek fasilitas kami yang lain</p>
-              <div class="services-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M7 7H17V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
+<!-- Gallery -->
+<section class="gallery" v-scroll-reveal>
+  <div class="gallery-container">
+    <h2><strong>OUR</strong> <em>FACILITY</em></h2>
+    
+    <div class="gallery-grid">
+      <div 
+        class="gallery-card" 
+        v-for="(item, index) in facilityItems" 
+        :key="index"
+        @click="handleFacilityClick(item)"
+      >
+        <div class="image-container">
+          <img :src="item.image" :alt="item.title" />
+          <div class="overlay-card">
+            <div class="card-content">
+              <h3>{{ item.title }}</h3>
+              <p>{{ item.description }}</p>
             </div>
           </div>
         </div>
-        
-        <button 
-          class="view-all-btn" 
-          @click="toggleGallery"
-        >
-          {{ showAllPhotos ? 'Show Less' : 'View All Gallery' }}
-        </button>
       </div>
-    </section>
+    </div>
+    
+    <!-- More Facilities Card -->
+    <div 
+      class="more-facilities-card" 
+      @click="goToServices"
+    >
+      <div class="more-facilities-content">
+        <div class="facilities-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7V10C2 16 6 20.5 12 22C18 20.5 22 16 22 10V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 12L11 14L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>More Facilities</h3>
+        <p>Ayo cek fasilitas kami yang lain</p>
+        <div class="facilities-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M7 7H17V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Countdown Modal -->
+    <div v-if="showCountdown" class="countdown-modal" @click="closeCountdown">
+      <div class="countdown-content" @click.stop>
+        <h3>Redirecting to Services...</h3>
+        <div class="countdown-circle">
+          <span class="countdown-number">{{ countdownValue }}</span>
+        </div>
+        <button @click="closeCountdown" class="close-countdown">Cancel</button>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- Popup Widget -->
     <PopupWidget 
@@ -153,7 +155,6 @@ export default {
   },
   data() {
     return {
-      showAllPhotos: false, 
       testimonials: [
         {
           name: 'Nusa',
@@ -181,48 +182,26 @@ export default {
           text: 'Tempat nyaman, makanan enak. Parkirnya juga luas, staf cukup ramah. Bisa juga digunakan untuk even atau acara lain, tersedia beberap ruang khusus'
         }
       ],
-      displayedItems: [
+      facilityItems: [
         {
-          title: "Cozy Interior",
-          description: "Comfortable seating area",
+          title: "Hall",
+          description: "Our Main Room",
           image: require('@/assets/hero-bg.png')
         },
         {
-          title: "Coffee Bar",
-          description: "Professional coffee making station",
+          title: "VIP Room",
+          description: "Arsya & Nendra",
           image: require('@/assets/hero-bg.png')
         },
         {
-          title: "Outdoor Seating",
-          description: "Fresh air dining experience",
-          image: require('@/assets/hero-bg.png')
-        },
-        {
-          title: "Private Room",
-          description: "Perfect for meetings",
-          image: require('@/assets/hero-bg.png')
-        },
-        {
-          title: "Kitchen",
-          description: "Clean and modern kitchen",
-          image: require('@/assets/hero-bg.png')
-        },
-        {
-          title: "Art Corner",
-          description: "Local art displays",
-          image: require('@/assets/hero-bg.png')
-        },
-        {
-          title: "Reading Corner",
-          description: "Quiet space for reading",
-          image: require('@/assets/hero-bg.png')
-        },
-        {
-          title: "Event Space",
-          description: "Perfect for celebrations",
+          title: "Balkon",
+          description: "Outdoor relaxing area",
           image: require('@/assets/hero-bg.png')
         }
       ],
+      showCountdown: false,
+      countdownValue: 3,
+      countdownTimer: null,
       popupConfig: {
         title: 'Welcome to La Luna Space',
         description: 'Nikmati pengalaman kuliner yang tak terlupakan di tempat yang cozy dan nyaman. Dengan berbagai menu pilihan terbaik untuk food dan beverage!',
@@ -246,8 +225,27 @@ export default {
     goToServices() {
       this.$router.push('/services');
     },
-    toggleGallery() {
-      this.showAllPhotos = !this.showAllPhotos;
+  handleFacilityClick() {
+  this.startCountdown();
+},
+    startCountdown() {
+      this.showCountdown = true;
+      this.countdownValue = 3;
+      
+      this.countdownTimer = setInterval(() => {
+        this.countdownValue--;
+        if (this.countdownValue <= 0) {
+          this.closeCountdown();
+          this.goToServices();
+        }
+      }, 1000);
+    },
+    closeCountdown() {
+      this.showCountdown = false;
+      if (this.countdownTimer) {
+        clearInterval(this.countdownTimer);
+        this.countdownTimer = null;
+      }
     },
     onPopupOpened() {
       console.log('Popup opened');
@@ -307,7 +305,12 @@ export default {
     }, { threshold: 1.0 });
 
     counters.forEach(counter => observer.observe(counter));
+  },
+beforeUnmount() {
+  if (this.countdownTimer) {
+    clearInterval(this.countdownTimer);
   }
+}
 };
 </script>
 
