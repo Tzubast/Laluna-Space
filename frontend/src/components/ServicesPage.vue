@@ -302,22 +302,12 @@ export default {
   overflow-x: hidden;
 }
 
-/* Scroll Reveal Animation */
-section {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.9s ease-out, transform 1s ease-out;
-}
-
-section[v-scroll-reveal].v-enter-active,
-section[v-scroll-reveal].v-enter-to {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 /* Hero Section */
 .hero {
   background-image: url('@/assets/hero-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -329,9 +319,12 @@ section[v-scroll-reveal].v-enter-to {
 }
 
 .overlay {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -374,6 +367,7 @@ section[v-scroll-reveal].v-enter-to {
   padding: 80px 0;
   position: relative;
   z-index: 1;
+  clear: both;
 }
 
 .content-container {
@@ -382,7 +376,7 @@ section[v-scroll-reveal].v-enter-to {
   padding: 0 20px;
 }
 
-/* Service Toggle - Sesuai referensi */
+/* Service Toggle */
 .service-toggle {
   display: flex;
   justify-content: center;
@@ -422,22 +416,79 @@ section[v-scroll-reveal].v-enter-to {
   background-color: rgba(212, 175, 55, 0.1);
 }
 
-/* Content Layout */
+/* 3D Flip Container - FIXED */
+.flip-container {
+  perspective: 1200px;
+  width: 100%;
+  margin-bottom: 80px;
+  position: relative;
+  /* PERBAIKAN: Set tinggi yang sesuai dengan konten */
+  min-height: auto;
+  clear: both;
+  z-index: 1;
+}
+
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: auto;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease-in-out;
+  /* PERBAIKAN: Tinggi otomatis sesuai konten */
+  min-height: auto;
+}
+
+.flip-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-front, 
+.flip-back {
+  /* PERBAIKAN: Ubah dari absolute ke relative untuk mencegah overlap */
+  position: relative;
+  width: 100%;
+  height: auto;
+  backface-visibility: hidden;
+  /* PERBAIKAN: Hapus positioning yang menyebabkan overlap */
+  min-height: auto;
+}
+
+.flip-front {
+  transform: rotateY(0deg);
+}
+
+.flip-back {
+  /* PERBAIKAN: Posisi back hanya saat flip aktif */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotateY(180deg);
+  width: 100%;
+}
+
+/* Content Layout - FIXED */
 .content-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
   align-items: start;
-  min-height: 500px;
+  /* PERBAIKAN: Tinggi otomatis untuk mencegah overlap */
+  min-height: auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
-/* Signature Menu - Sesuai referensi */
+/* Signature Menu - FIXED */
 .signature-menu {
   background-color: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 8px;
   padding: 25px;
-  height: fit-content;
+  /* PERBAIKAN: Tinggi otomatis */
+  height: auto;
+  min-height: auto;
+  position: relative;
 }
 
 .menu-header {
@@ -466,34 +517,28 @@ section[v-scroll-reveal].v-enter-to {
   text-transform: uppercase;
 }
 
-/* Menu Images Layout - Diperbaiki sesuai referensi */
+/* Menu Images Layout - FIXED */
 .menu-images {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   height: 300px;
 }
 
 .main-image {
-  grid-column: 1;
-  grid-row: 1 / 3;
+  flex: 2;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-}
-
-.secondary-images {
-  grid-column: 2;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  gap: 12px;
+  height: 200px;
 }
 
 .secondary-image {
+  flex: 1;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
+  height: 120px;
 }
 
 .main-image img, 
@@ -521,10 +566,13 @@ section[v-scroll-reveal].v-enter-to {
   font-weight: 400;
 }
 
-/* Project Overview - Diperbaiki */
+/* Project Overview - FIXED */
 .project-overview {
   padding: 0;
-  height: fit-content;
+  /* PERBAIKAN: Tinggi otomatis */
+  height: auto;
+  min-height: auto;
+  position: relative;
 }
 
 .project-overview h3 {
@@ -547,11 +595,11 @@ section[v-scroll-reveal].v-enter-to {
   font-size: 0.9rem;
   line-height: 1.7;
   color: #cccccc;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   text-align: justify;
 }
 
-/* Project Info Box - Diperbaiki */
+/* Project Info Box */
 .project-info {
   background-color: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -597,47 +645,19 @@ section[v-scroll-reveal].v-enter-to {
   text-align: right;
 }
 
-/* Gallery Section - Diperbaiki */
+/* Gallery Section - FIXED */
 .gallery-section {
-  margin-top: 50px;
+  margin-top: 80px;
   clear: both;
+  position: relative;
+  z-index: 2;
+  /* PERBAIKAN: Pastikan section ini tidak overlap */
+  background-color: #000;
+  padding-top: 40px;
+  width: 100%;
 }
 
 .gallery-section h3 {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: white;
-  margin-bottom: 30px;
-  text-align: left;
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  margin-bottom: 40px;
-}
-
-.gallery-item {
-  aspect-ratio: 1;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-}
-
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.gallery-item:hover img {
-  transform: scale(1.05);
-}
-
-/* Other Menu Section */
-.other-menu-section h3 {
   font-size: 1.5rem;
   font-weight: 500;
   color: white;
@@ -708,9 +728,38 @@ section[v-scroll-reveal].v-enter-to {
     gap: 40px;
   }
   
-  .gallery-grid,
   .other-menu-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* PERBAIKAN: Reset semua tinggi pada tablet */
+  .flip-container,
+  .flip-inner,
+  .flip-front,
+  .flip-back,
+  .signature-menu,
+  .project-overview {
+    min-height: auto;
+    height: auto;
+  }
+  
+  .flip-front,
+  .flip-back {
+    position: relative;
+  }
+  
+  .flip-back {
+    display: none;
+  }
+  
+  .flip-inner.flipped .flip-front {
+    display: none;
+  }
+  
+  .flip-inner.flipped .flip-back {
+    display: block;
+    position: relative;
+    transform: none;
   }
 }
 
@@ -733,6 +782,11 @@ section[v-scroll-reveal].v-enter-to {
   .signature-menu,
   .project-info {
     padding: 20px;
+    min-height: auto;
+  }
+  
+  .project-overview {
+    min-height: auto;
   }
   
   .menu-header {
@@ -742,26 +796,23 @@ section[v-scroll-reveal].v-enter-to {
   }
   
   .menu-images {
-    grid-template-columns: 1fr;
-    grid-template-rows: 200px 100px 100px;
     height: auto;
   }
   
   .main-image {
-    grid-column: 1;
-    grid-row: 1;
+    height: 150px;
   }
   
-  .secondary-images {
-    grid-column: 1;
-    grid-row: 2 / 4;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+  .secondary-image {
+    height: 100px;
   }
   
-  .gallery-grid,
   .other-menu-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .flip-container {
+    margin-bottom: 60px;
   }
 }
 
@@ -792,44 +843,6 @@ section[v-scroll-reveal].v-enter-to {
   .info-value {
     text-align: left;
   }
-}
-
-/* 3D Flip Container - Jika masih digunakan */
-.flip-container {
-  perspective: 1200px;
-  width: 100%;
-  margin-bottom: 80px;
-  min-height: 600px;
-}
-
-.flip-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.8s ease-in-out;
-}
-
-.flip-inner.flipped {
-  transform: rotateY(180deg);
-}
-
-.flip-front, 
-.flip-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  top: 0;
-  left: 0;
-}
-
-.flip-front {
-  transform: rotateY(0deg);
-}
-
-.flip-back {
-  transform: rotateY(180deg);
 }
 
 /* Smooth scrolling */
