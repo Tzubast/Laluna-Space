@@ -252,7 +252,7 @@ export default {
           image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=300&h=200&fit=crop'
         },
         {
-          title: 'Milkosaurus',
+          title: 'Milosaurus',
           price: '27K',
           image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=300&h=200&fit=crop'
         }

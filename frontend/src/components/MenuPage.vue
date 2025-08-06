@@ -108,146 +108,137 @@ export default {
       this.selectedCategory = categoryId;
     },
     generateMenuItems() {
-  const items = [];
-  
-  // Data menu dengan gambar yang sesuai kategori
-  const menuData = {
-    'coffee-based': [
-      { name: 'Espresso', image: 'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=400&h=300&fit=crop' },
-      { name: 'Americano', image: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400&h=300&fit=crop' },
-      { name: 'Cappuccino', image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&h=300&fit=crop' },
-      { name: 'Black Coffee', image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop' }
-    ],
-    'flavor-latte': [
-      { name: 'Vanilla Latte', image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop' },
-      { name: 'Caramel Latte', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop' },
-      { name: 'Hazelnut Latte', image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400&h=300&fit=crop' },
-      { name: 'Mocha Latte', image: 'https://images.unsplash.com/photo-1521302200778-33500795e128?w=400&h=300&fit=crop' },
-      { name: 'Coconut Latte', image: 'https://images.unsplash.com/photo-1542181961-9590d0c79dab?w=400&h=300&fit=crop' },
-      { name: 'Almond Latte', image: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=400&h=300&fit=crop' },
-      { name: 'Cinnamon Latte', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop' },
-      { name: 'Lavender Latte', image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=300&fit=crop' }
-    ],
-    'non-coffee': [
-      { name: 'Hot Chocolate', image: 'https://images.unsplash.com/photo-1542990253-0b395fb73a88?w=400&h=300&fit=crop' },
-      { name: 'Matcha Latte', image: 'https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=400&h=300&fit=crop' },
-      { name: 'Chai Latte', image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&h=300&fit=crop' },
-      { name: 'Golden Milk', image: 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=400&h=300&fit=crop' },
-      { name: 'Steamed Milk', image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&h=300&fit=crop' },
-      { name: 'Honey Lemon', image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop' }
-    ],
-    'smoothies': [
-      { name: 'Berry Smoothie', image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=400&h=300&fit=crop' },
-      { name: 'Mango Smoothie', image: 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=400&h=300&fit=crop' },
-      { name: 'Green Smoothie', image: 'https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=400&h=300&fit=crop' }
-    ],
-    'refreshner': [
-      { name: 'Lemon Mint', image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop' },
-      { name: 'Cucumber Water', image: 'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=400&h=300&fit=crop' },
-      { name: 'Infused Water', image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=300&fit=crop' },
-      { name: 'Sparkling Lime', image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&h=300&fit=crop' },
-      { name: 'Fresh Orange', image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?w=400&h=300&fit=crop' }
-    ],
-    'frappe': [
-      { name: 'Coffee Frappe', image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop' },
-      { name: 'Chocolate Frappe', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop' },
-      { name: 'Vanilla Frappe', image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400&h=300&fit=crop' }
-    ],
-    'tea-based': [
-      { name: 'Earl Grey', image: 'https://images.unsplash.com/photo-1544787219-7092b8d9a1c7?w=400&h=300&fit=crop' },
-      { name: 'Green Tea', image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop' },
-      { name: 'Chamomile Tea', image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&h=300&fit=crop' },
-      { name: 'Jasmine Tea', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop' },
-      { name: 'Oolong Tea', image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=300&fit=crop' }
-    ],
-    'snack': [
-      { name: 'Croissant', image: 'https://images.unsplash.com/photo-1555507036-ab794f575e77?w=400&h=300&fit=crop' },
-      { name: 'Club Sandwich', image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=300&fit=crop' },
-      { name: 'Chocolate Cookies', image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=300&fit=crop' },
-      { name: 'Blueberry Muffin', image: 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=400&h=300&fit=crop' },
-      { name: 'Glazed Donut', image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=300&fit=crop' },
-      { name: 'Everything Bagel', image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop' },
-      { name: 'Soft Pretzel', image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=400&h=300&fit=crop' },
-      { name: 'Belgian Waffle', image: 'https://images.unsplash.com/photo-1562440499-64c9a74f0d24?w=400&h=300&fit=crop' },
-      { name: 'Fluffy Pancake', image: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=300&fit=crop' },
-      { name: 'Avocado Toast', image: 'https://images.unsplash.com/photo-1506084868230-bb9d95c24759?w=400&h=300&fit=crop' },
-      { name: 'English Scone', image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&h=300&fit=crop' },
-      { name: 'Cheesecake Slice', image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop' }
-    ],
-    'platter': [
-      { name: 'Cheese Platter', image: 'https://images.unsplash.com/photo-1552767059-ce182ead6c1b?w=400&h=300&fit=crop' },
-      { name: 'Fruit Platter', image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop' },
-      { name: 'Mix Platter', image: 'https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=400&h=300&fit=crop' }
-    ],
-    'wingers': [
-      { name: 'Buffalo Wings', image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&h=300&fit=crop' },
-      { name: 'BBQ Wings', image: 'https://images.unsplash.com/photo-1608039755401-742074f0548d?w=400&h=300&fit=crop' }
-    ],
-    'western': [
-      { name: 'Beef Steak', image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop' },
-      { name: 'Grilled Chicken', image: 'https://images.unsplash.com/photo-1532636875304-0c89119d9b4d?w=400&h=300&fit=crop' }
-    ],
-    'spaghetti': [
-      { name: 'Spaghetti Bolognese', image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400&h=300&fit=crop' },
-      { name: 'Fettuccine Alfredo', image: 'https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=400&h=300&fit=crop' }
-    ],
-    'nasi-goreng': [
-      { name: 'Nasi Goreng Spesial', image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop' },
-      { name: 'Nasi Goreng Seafood', image: 'https://images.unsplash.com/photo-1559847844-d942df961ac6?w=400&h=300&fit=crop' },
-      { name: 'Nasi Goreng Ayam', image: 'https://images.unsplash.com/photo-1563379091339-03246963d29c?w=400&h=300&fit=crop' },
-      { name: 'Nasi Goreng Kampung', image: 'https://images.unsplash.com/photo-1605032834994-bf2d5e7b1ba0?w=400&h=300&fit=crop' }
-    ],
-    'rice-bowl': [
-      { name: 'Chicken Teriyaki Bowl', image: 'https://images.unsplash.com/photo-1563379091339-03246963d29c?w=400&h=300&fit=crop' },
-      { name: 'Beef Bowl', image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop' },
-      { name: 'Salmon Bowl', image: 'https://images.unsplash.com/photo-1559847844-d942df961ac6?w=400&h=300&fit=crop' },
-      { name: 'Tuna Bowl', image: 'https://images.unsplash.com/photo-1605032834994-bf2d5e7b1ba0?w=400&h=300&fit=crop' },
-      { name: 'Vegetable Bowl', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop' },
-      { name: 'Tofu Bowl', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop' },
-      { name: 'Shrimp Bowl', image: 'https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=400&h=300&fit=crop' },
-      { name: 'Katsu Bowl', image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop' },
-      { name: 'Egg Bowl', image: 'https://images.unsplash.com/photo-1551218808-94e220e084d2?w=400&h=300&fit=crop' },
-      { name: 'Mushroom Bowl', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop' }
-    ],
-    'indonesia': [
-      { name: 'Rendang', image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop' },
-      { name: 'Gado-Gado', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop' },
-      { name: 'Sate Ayam', image: 'https://images.unsplash.com/photo-1563379091339-03246963d29c?w=400&h=300&fit=crop' }
-    ],
-    'dessert': [
-      { name: 'Tiramisu', image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop' },
-      { name: 'Chocolate Cake', image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop' },
-      { name: 'Ice Cream', image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop' },
-      { name: 'Cheesecake', image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400&h=300&fit=crop' },
-      { name: 'Panna Cotta', image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=300&fit=crop' },
-      { name: 'Macarons', image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&h=300&fit=crop' },
-      { name: 'Crème Brûlée', image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=300&fit=crop' }
-    ],
-    'morning': [
-      { name: 'Breakfast Special', image: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=421&h=759&fit=crop' }
-    ]
-  };
+      const rawMenu = [
+        // Format: [name, price, category]
+        ['Americano', '15K | 18K | 20K', 'coffee-based'],
+        ['Cafe Latte', '22K | 25K | 28K', 'coffee-based'],
+        ['Cappucino', '20K | 22K | 24K', 'coffee-based'],
+        ['Pour Over', '18K (ONLY REG)', 'coffee-based'],
 
-  let idCounter = 1;
-  
-  // Loop melalui setiap kategori
-  for (const [category, categoryItems] of Object.entries(menuData)) {
-    // Loop melalui setiap item dalam kategori
-    categoryItems.forEach(item => {
-      items.push({
-        id: idCounter++,
-        name: item.name,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        price: `${15 + Math.floor(Math.random() * 20)}K`,
-        category: category,
-        image: item.image
-      });
-    });
-  }
+        ['Caramel Macchiato', '26K | 29K', 'flavor-latte'],
+        ['Vanilla Latte', '24K | 27K', 'flavor-latte'],
+        ['Aren Latte', '22K | 25K', 'flavor-latte'],
+        ['Banana Latte', '22K | 25K', 'flavor-latte'],
+        ['Salted Ice Coffee', '24K | 27K', 'flavor-latte'],
+        ['Buttercream Tiramisu Latte', '26K | 29K', 'flavor-latte'],
+        ['Butterscotch Cream Latte', '26K | 29K', 'flavor-latte'],
+        ['Coffee Creamy Melt', '22K | 25K', 'flavor-latte'],
 
-  console.log('Generated menu items:', items); // Untuk debugging
-  return items;
-}
+        ['Chocolatte', '25K | 25K | 28K', 'non-coffee'],
+        ['Matcha', '25K | 25K | 28K', 'non-coffee'],
+        ['Mango Stick Rice', '24K', 'non-coffee'],
+        ['Strawberry Milk', '24K | 27K', 'non-coffee'],
+        ['Banana Milk', '24K | 27K', 'non-coffee'],
+        ['Strawberry Summer', '24K', 'non-coffee'],
+
+        ['Mango Freeze', '27K', 'smoothies'],
+        ['Pink Nana Dream', '25K', 'smoothies'],
+        ['Drago Mango', '27K', 'smoothies'],
+
+        ['Blue Ocean', '20K', 'refreshner'],
+        ['Strawberry Peach Sky', '20K', 'refreshner'],
+        ['Mango Sparkling', '20K', 'refreshner'],
+        ['Lychee Brew', '20K', 'refreshner'],
+        ['Purple Mood', '20K', 'refreshner'],
+
+        ['Milosaurus', '30K', 'frappe'],
+        ['Cookies & Cream', '30K', 'frappe'],
+        ['Cloud Candy', '28K', 'frappe'],
+
+        ['Thai Tea', '18K | 20K', 'tea-based'],
+        ['Honey Peach Tea', '18K | 20K', 'tea-based'],
+        ['Lemon Tea', '16K | 18K', 'tea-based'],
+        ['Lychee Tea', '16K | 18K', 'tea-based'],
+        ['Black Tea', '18K', 'tea-based'],
+
+        ['Truffle Nori Fries', '18K', 'snack'],
+        ['Patata Chips', '16K', 'snack'],
+        ['Tahu Cabe Garam', '18K', 'snack'],
+        ['Tahu Bakso', '20K', 'snack'],
+        ['Tempe Mendoan', '16K', 'snack'],
+        ['Cireng', '16K', 'snack'],
+        ['Taichan', '30K', 'snack'],
+        ['Taichan Mentai', '35K', 'snack'],
+        ['Gyoza', '25K', 'snack'],
+        ['Gyoza Mentai', '24K', 'snack'],
+        ['Pisang Goreng', '20K', 'snack'],
+        ['churros', '18K', 'snack'],
+
+        ['Laluna Platter', '35K', 'platter'],
+        ['Mini Platter', '25K', 'platter'],
+        ['Nusantara Platter', '30K', 'platter'],
+
+        ['La Luna Wingers', '25K', 'wingers'],
+        ['Buffalo Chicken Wingers', '25K', 'wingers'],
+
+        ['Grilled Chicken with Potato Mousline', '27K', 'western'],
+        ['Grilled Chicken Citrus Dressing Salad', '25K', 'western'],
+
+        ['Aglio O\'lio with Sambal Matah', '28K', 'spaghetti'],
+        ['Chicken Carbonara', '30K', 'spaghetti'],
+
+        ['Nasi Goreng Laluna Style', '30K', 'nasi-goreng'],
+        ['Nasi Goreng Sambal Ijo', '28K', 'nasi-goreng'],
+        ['Nasi Goreng Jawa', '27K', 'nasi-goreng'],
+        ['Nasi Goreng Seafood', '30K', 'nasi-goreng'],
+
+        ['Chicken Curry Rice', '30K', 'rice-bowl'],
+        ['Beef Teriyaki', '35K', 'rice-bowl'],
+        ['Chicken Mentai', '25K', 'rice-bowl'],
+        ['Beef Mentai', '35K', 'rice-bowl'],
+        ['Salmon Mentai', '35K', 'rice-bowl'],
+        ['Grilled Chicken Butter Rice with Sambal Matah', '25K', 'rice-bowl'],
+        ['Salted Egg Chicken Rice', '29K', 'rice-bowl'],
+        ['Ayam Charsiu', '27K', 'rice-bowl'],
+        ['Nasi Daging Sambal Ijo', '30K', 'rice-bowl'],
+        ['Nasi Cumi Sambal Ijo', '30K', 'rice-bowl'],
+
+        ['Ayam Goreng Kremes', '25K', 'indonesia'],
+        ['Ayam Betutu', '38K', 'indonesia'],
+        ['Nasi Rawon daging', '38K', 'indonesia'],
+
+        ['Choco Nendra Cheese cake', '35K', 'dessert'],
+        ['Avriella Cheese Cake', '40K', 'dessert'],
+        ['Creme Brulee', '22K', 'dessert'],
+        ['Italian Tiramisu', '25K', 'dessert'],
+        ['Pannacotta Chocolatte', '22K', 'dessert'],
+        ['Pannacota Caramel', '22K', 'dessert'],
+        ['Pannacota Strawberry', '22K', 'dessert'],
+
+        // Morning Choice - hanya gambar tanpa detail menu
+        ['Morning Choice', '', 'morning']
+      ];
+
+      // Mapping gambar untuk setiap kategori
+      const categoryImages = {
+        'coffee-based': 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400&h=300&fit=crop',
+        'flavor-latte': 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop',
+        'non-coffee': 'https://images.unsplash.com/photo-1542990253-0b395fb73a88?w=400&h=300&fit=crop',
+        'smoothies': 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=400&h=300&fit=crop',
+        'refreshner': 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop',
+        'frappe': 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop',
+        'tea-based': 'https://images.unsplash.com/photo-1544787219-7092b8d9a1c7?w=400&h=300&fit=crop',
+        'snack': 'https://images.unsplash.com/photo-1555507036-ab794f575e77?w=400&h=300&fit=crop',
+        'platter': 'https://images.unsplash.com/photo-1552767059-ce182ead6c1b?w=400&h=300&fit=crop',
+        'wingers': 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&h=300&fit=crop',
+        'western': 'https://images.unsplash.com/photo-1532636875304-0c89119d9b4d?w=400&h=300&fit=crop',
+        'spaghetti': 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400&h=300&fit=crop',
+        'nasi-goreng': 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop',
+        'rice-bowl': 'https://images.unsplash.com/photo-1563379091339-03246963d29c?w=400&h=300&fit=crop',
+        'indonesia': 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop',
+        'dessert': 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop',
+        'morning': require('@/assets/morning-choice.jpg')
+      };
+
+      return rawMenu.map((item, index) => ({
+        id: index + 1,
+        name: item[0],
+        price: item[1],
+        category: item[2],
+        image: categoryImages[item[2]] || 'https://via.placeholder.com/400x300?text=' + encodeURIComponent(item[0]),
+        description: 'Delicious and freshly made.'
+      }));
+    }
   },
   computed: {
     filteredMenu() {
